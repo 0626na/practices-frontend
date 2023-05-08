@@ -4,10 +4,9 @@ type todo = {
   children: string;
   onchange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   checked: boolean;
-  done: boolean;
 };
 
-function CheckBox({ children = "", onchange, checked, done = false }: todo) {
+function CheckBox({ children = "", onchange, checked }: todo) {
   const [isChecked, setIsChecked] = useState(checked);
 
   useEffect(() => setIsChecked(checked), [checked]);
@@ -15,7 +14,6 @@ function CheckBox({ children = "", onchange, checked, done = false }: todo) {
     <div>
       <label>
         <input
-          disabled={done}
           type="checkbox"
           checked={isChecked}
           onChange={(event) => onchange(event)}

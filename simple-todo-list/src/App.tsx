@@ -15,69 +15,99 @@ function App() {
   const year = today.toLocaleString("default", { year: "numeric" });
 
   return (
-    <MainContainer>
-      <HeaderContainer>
-        <h2>
-          {month} {day}, {year}
-        </h2>
-        <HeaderBottomBorder />
-      </HeaderContainer>
-      <IncompleteTodoList>
-        <h2>Incomplete</h2>
-        {incompletedList.map((todo, index) => (
-          <CheckBox
-            done={false}
-            key={index}
-            checked={todo.checked}
-            onchange={(event) => {
-              if (event.target.checked) {
-                setIncompledtedlist(
-                  incompletedList.filter((item) => item !== todo)
-                );
-                setCompletedList([
-                  ...completedList,
-                  { name: todo.name, checked: true },
-                ]);
-              }
-            }}
-          >
-            {todo.name}
-          </CheckBox>
-        ))}
-      </IncompleteTodoList>
-      <CompleteTodoList>
-        <h2>Completed</h2>
-        {completedList.map((todo, index) => (
-          <CheckBox done={true} checked={todo.checked} onchange={(event) => {}}>
-            {todo.name}
-          </CheckBox>
-        ))}
-      </CompleteTodoList>
-    </MainContainer>
+    <BackGroundContainer>
+      <MainContainer>
+        <HeaderContainer>
+          <h2 className="font-bold text-4xl ">
+            {month} {day}, {year}
+          </h2>
+          <h3 className="mt-2 text-[#575767] text-sm font-semibold">
+            {incompletedList.length} incomplete, {completedList.length}{" "}
+            completed
+          </h3>
+          <HeaderBottomBorder />
+        </HeaderContainer>
+        <IncompleteTodoList>
+          <h2 className="text-[#575767] text-lg font-bold">Incomplete</h2>
+          {incompletedList.map((todo, index) => (
+            <CheckBox
+              key={index}
+              checked={todo.checked}
+              onchange={(event) => {
+                if (event.target.checked) {
+                  setIncompledtedlist(
+                    incompletedList.filter((item) => item !== todo)
+                  );
+                  setCompletedList([
+                    ...completedList,
+                    { name: todo.name, checked: true },
+                  ]);
+                }
+              }}
+            >
+              {todo.name}
+            </CheckBox>
+          ))}
+        </IncompleteTodoList>
+        <CompleteTodoList>
+          <h2 className="text-[#575767] text-lg font-bold">Completed</h2>
+          {completedList.map((todo, index) => (
+            <CheckBox
+              checked={todo.checked}
+              onchange={(event) => {
+                if (!event.target.checked) {
+                  setCompletedList(
+                    completedList.filter((item) => item !== todo)
+                  );
+                  setIncompledtedlist([
+                    { name: todo.name, checked: false },
+                    ...incompletedList,
+                  ]);
+                }
+              }}
+            >
+              {todo.name}
+            </CheckBox>
+          ))}
+        </CompleteTodoList>
+      </MainContainer>
+    </BackGroundContainer>
   );
 }
 
-const MainContainer = tw.div`
-bg-slate-300
+const BackGroundContainer = tw.div`
 flex
-flex-col
 justify-center
-w-full
+h-screen
 items-center
+`;
+
+const MainContainer = tw.div`
+  w-96
+  h-[500px]
+  flex
+  flex-col
+  p-6
+  m-4
+  shadow-md
+  rounded-xl
+  overflow-y-scroll
 `;
 
 const HeaderContainer = tw.div``;
 
 const HeaderBottomBorder = tw.div`
   border-b-2
+  my-4
+  opacity-20	
 `;
 
 const IncompleteTodoList = tw.div`
-m-3
+
 `;
 
 const CompleteTodoList = tw.div`
-  m-3
+  
 `;
 
 export default App;
