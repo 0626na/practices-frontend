@@ -15,3 +15,8 @@ export const completeTodoState = atom<Todo[]>({
   key: "complete_todolist",
   default: [],
 });
+
+export const addTodoVisibleState = atom({
+  key: "visible_addTodo",
+  default: false,
+});

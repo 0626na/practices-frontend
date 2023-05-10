@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { Todo, incompleteTodoState } from "../states/todoList";
+
+import { Todo } from "../states/todoList";
 
 type todo = {
   children: Todo;

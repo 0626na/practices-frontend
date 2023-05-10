@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import tw from "tailwind-styled-components";
 import CheckBox from "./components/checkBox";
 import { useRecoilState } from "recoil";
-import { completeTodoState, incompleteTodoState } from "./states/todoList";
+import {
+  addTodoVisibleState,
+  completeTodoState,
+  incompleteTodoState,
+} from "./states/todoList";
+import AddTodo from "./components/addTodo";
 
 function App() {
   const [incompletedList, setIncompledtedlist] =
     useRecoilState(incompleteTodoState);
   const [completedList, setCompletedList] = useRecoilState(completeTodoState);
-  const [id, setId] = useState(incompletedList.length);
+
+  const [bAdd, setAdd] = useRecoilState(addTodoVisibleState);
 
   const today = new Date();
   const month = today.toLocaleString("default", { month: "long" });
@@ -31,25 +37,29 @@ function App() {
         <div className="overflow-auto h-full">
           <IncompleteTodoList>
             <h2 className="text-[#575767] text-lg font-bold">Incomplete</h2>
-            {incompletedList.map((todo, index) => (
-              <CheckBox
-                key={index}
-                checked={todo.checked}
-                onchange={(event) => {
-                  if (event.target.checked) {
-                    setIncompledtedlist(
-                      incompletedList.filter((item) => item !== todo)
-                    );
-                    setCompletedList([
-                      ...completedList,
-                      { name: todo.name, checked: true, id: todo.id },
-                    ]);
-                  }
-                }}
-              >
-                {todo}
-              </CheckBox>
-            ))}
+            {incompletedList.length !== 0 ? (
+              incompletedList.map((todo, index) => (
+                <CheckBox
+                  key={index}
+                  checked={todo.checked}
+                  onchange={(event) => {
+                    if (event.target.checked) {
+                      setIncompledtedlist(
+                        incompletedList.filter((item) => item !== todo)
+                      );
+                      setCompletedList([
+                        ...completedList,
+                        { name: todo.name, checked: true, id: todo.id },
+                      ]);
+                    }
+                  }}
+                >
+                  {todo}
+                </CheckBox>
+              ))
+            ) : (
+              <h3>All Clear!</h3>
+            )}
           </IncompleteTodoList>
           <CompleteTodoList>
             {!!completedList.length && (
@@ -77,15 +87,10 @@ function App() {
             ))}
           </CompleteTodoList>
         </div>
+        {bAdd && <AddTodo />}
         <button
           className="w-14 h-14 bg-[#515CC6] rounded-full mr-4 mb-2 self-end justify-items-end"
-          onClick={(e) => {
-            setIncompledtedlist([
-              { name: "new Todo", checked: false, id },
-              ...incompletedList,
-            ]);
-            setId(id + 1);
-          }}
+          onClick={(e) => setAdd(!bAdd)}
         >
           <img src="plus_icon.svg" alt="" />
         </button>
