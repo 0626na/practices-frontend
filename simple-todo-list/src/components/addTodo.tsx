@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { addTodoVisibleState, incompleteTodoState } from "../states/todoList";
 
 function AddTodo() {
@@ -7,7 +7,7 @@ function AddTodo() {
   const [incompletedList, setIncompledtedlist] =
     useRecoilState(incompleteTodoState);
   const [id, setId] = useState(incompletedList.length);
-  const [bAdd, setAdd] = useRecoilState(addTodoVisibleState);
+  const setAdd = useSetRecoilState(addTodoVisibleState);
 
   return (
     <div>
