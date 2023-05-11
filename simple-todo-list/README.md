@@ -8,6 +8,7 @@
 - Typescript
 - tailWind
 - CRA (Create React App)
+- localStorage
 
 ### 구현목록
 
@@ -19,8 +20,8 @@
 - [x] Todo 삭제기능
 - [x] 미완료 목록 체크시 완료목록으로 이동
 - [x] 완료목록 클릭시 다시 미완료 목록으로 이동
-- [ ] 브라우저에 데이터를 저장하여 브라우저를 종료해도 데이터 유지
-- [ ] tailwind / styled-component를 이용한 스타일링
+- [x] 브라우저에 데이터를 저장하여 브라우저를 종료해도 데이터 유지
+- [x] tailwind / styled-component를 이용한 스타일링
 
 ### 개발 과정중 나타난 어려움
 
@@ -28,3 +29,4 @@
 - Todolist의 헤더부분 (날짜 및 완료갯수 표시부분) 스크롤에 상관없이 고정시키는 작업
 - svg에 관한 지식부족
 - css에 대한 (특히 높이) 이해
+- localStorage에 대해서 좀더 알아보자

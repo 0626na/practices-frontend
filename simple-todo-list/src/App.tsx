@@ -49,8 +49,32 @@ function App() {
                       );
                       setCompletedList([
                         ...completedList,
-                        { name: todo.name, checked: true, id: todo.id },
+                        {
+                          ...todo,
+                          checked: true,
+                          id: completedList.length + 1,
+                        },
                       ]);
+
+                      localStorage.setItem(
+                        "incompleteTodoList",
+                        JSON.stringify([
+                          ...incompletedList.filter((item) => item !== todo),
+                        ])
+                      );
+
+                      //completedList key를 가진 localStorage에 todo를 추가
+                      localStorage.setItem(
+                        "completeTodoList",
+                        JSON.stringify([
+                          ...completedList,
+                          {
+                            ...todo,
+                            checked: true,
+                            id: incompletedList.length + 1,
+                          },
+                        ])
+                      );
                     }
                   }}
                 >
@@ -69,6 +93,7 @@ function App() {
             )}
             {completedList.map((todo, index) => (
               <CheckBox
+                key={index}
                 checked={todo.checked}
                 onchange={(event) => {
                   if (!event.target.checked) {
@@ -76,9 +101,32 @@ function App() {
                       completedList.filter((item) => item !== todo)
                     );
                     setIncompledtedlist([
-                      { name: todo.name, checked: false, id: todo.id },
+                      {
+                        ...todo,
+                        checked: false,
+                        id: incompletedList.length + 1,
+                      },
                       ...incompletedList,
                     ]);
+
+                    localStorage.setItem(
+                      "completeTodoList",
+                      JSON.stringify([
+                        ...completedList.filter((item) => item !== todo),
+                      ])
+                    );
+
+                    localStorage.setItem(
+                      "incompleteTodoList",
+                      JSON.stringify([
+                        ...incompletedList,
+                        {
+                          ...todo,
+                          checked: true,
+                          id: completedList.length + 1,
+                        },
+                      ])
+                    );
                   }
                 }}
               >

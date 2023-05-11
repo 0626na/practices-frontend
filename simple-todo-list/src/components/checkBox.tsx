@@ -33,6 +33,12 @@ function CheckBox({ children, onchange, checked }: todo) {
             setIncompledtedlist(
               incompletedList.filter((item) => item !== children)
             );
+            localStorage.setItem(
+              "incompleteTodoList",
+              JSON.stringify([
+                ...incompletedList.filter((item) => item !== children),
+              ])
+            );
           }}
         >
           <img src="delete.png" alt="" className="w-5 h-5" />

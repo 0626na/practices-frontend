@@ -23,6 +23,15 @@ function AddTodo() {
               { name: value, checked: false, id },
               ...incompletedList,
             ]);
+
+            localStorage.setItem(
+              "incompleteTodoList",
+              JSON.stringify([
+                { name: value, checked: false, id },
+                ...incompletedList,
+              ])
+            );
+
             setId(id + 1);
             setAdd(false);
           }

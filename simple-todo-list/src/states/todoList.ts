@@ -6,14 +6,17 @@ export type Todo = {
   id: number;
 };
 
+const incompleteTodoList = localStorage.getItem("incompleteTodoList");
+const completeTodoList = localStorage.getItem("completeTodoList");
+
 export const incompleteTodoState = atom<Todo[]>({
   key: "incomplete_todolist",
-  default: [],
+  default: incompleteTodoList ? JSON.parse(incompleteTodoList) : [],
 });
 
 export const completeTodoState = atom<Todo[]>({
   key: "complete_todolist",
-  default: [],
+  default: completeTodoList ? JSON.parse(completeTodoList) : [],
 });
 
 export const addTodoVisibleState = atom({
